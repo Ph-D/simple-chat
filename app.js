@@ -9,7 +9,7 @@ app.use(express.static('public'));
 
 var path = __dirname + '/views/';
 
-var customers = [];
+var messages = [];
 
 router.use(function (req,res,next) {
   console.log("/" + req.method);
@@ -20,28 +20,22 @@ app.get("/",function(req,res){
   res.sendFile(path + "index.html");
 });
 
-app.post("/api/customers/save", function(req,res){
-	console.log('Post a Customer: ' + JSON.stringify(req.body));
+app.post("/api/messages/save", function(req,res){
+	console.log('Message posted: ' + JSON.stringify(req.body));
 	var customer = {};
-	customer.firstname = req.body.firstname;
-	customer.lastname = req.body.lastname;
+	customer.message = req.body.message;
 	
-	customers.push(customer);
+	messages.push(customer);
 	
 	return res.send(customer);
 });
 
-app.get("/api/customers/all", function(req,res){
-	console.log("Get All Customers");
-	return res.send(customers);
+app.get("/api/messages/all", function(req,res){
+	return res.send(messages);
 });
 
 app.use("/",router);
 
-app.use("*",function(req,res){
-  res.sendFile(path + "404.html");
-});
-
-app.listen(8081, function () {
-  console.log('Example app listening on port 8081!')
+app.listen(8080, function () {
+  console.log('Listening on port 8080!')
 })

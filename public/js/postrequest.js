@@ -1,35 +1,24 @@
 $( document ).ready(function() {
-	
-	// SUBMIT FORM
     $("#customerForm").submit(function(event) {
-		// Prevent the form from submitting via the browser.
 		event.preventDefault();
 		ajaxPost();
+		
 	});
     
-	
-	
-
-	
     function ajaxPost(){
     	
-    	// PREPARE FORM DATA
     	var formData = {
-    		firstname : $("#firstname").val(),
-    		lastname :  $("#lastname").val()
+    		message : $("#message").val(),
     	}
-    	
-    	// DO POST
+    
     	$.ajax({
 			type : "POST",
 			contentType : "application/json",
-			url : window.location + "api/customers/save",
+			url : window.location + "api/messages/save",
 			data : JSON.stringify(formData),
 			dataType : 'json',
 			success : function(customer) {
-				$("#postResultDiv").html("<p>" + 
-					"Post Successfully! <br>" +
-					"--->" + JSON.stringify(customer)+ "</p>"); 
+				console.log('message posté');
 			},
 			error : function(e) {
 				alert("Error!")
@@ -37,13 +26,14 @@ $( document ).ready(function() {
 			}
 		});
     	
-    	// Reset FormData after Posting
     	resetData();
 
     }
     
     function resetData(){
-    	$("#firstname").val("");
-    	$("#lastname").val("");
-    }
+    	$("#message").val("");
+    
+	}
+
+
 })

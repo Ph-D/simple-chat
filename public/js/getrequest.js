@@ -1,23 +1,13 @@
 
-	
-	// GET REQUEST
-	$("#allCustomers").click(function(event){
-		event.preventDefault();
-		ajaxGet();
-	});
-
-	var count = 0;
-	
-	// DO GET
-	function ajaxGet(){
+function ajaxGet(){
 		$.ajax({
 			type : "GET",
-			url : window.location + "api/customers/all",
+			url : window.location + "api/messages/all",
 			success: function(result){
 				$('#getResultDiv ul').empty();
 				var custList = "";
 				$.each(result, function(i, customer){
-					$('#getResultDiv .list-group').append(customer.firstname + " " + customer.lastname + "<br>")
+					$('#getResultDiv .list-group').append(customer.message + "<br>")
 				});
 				console.log("Success: ", result);
 			},
@@ -26,12 +16,8 @@
 				console.log("ERROR: ", e);
 			}
 		});	
+}
 
-		count++
-		console.log(count);
-	}
-
-
-    setInterval(ajaxGet(), 1000);
-
-
+$(document).ready(function() {
+	setInterval(function(){
+	ajaxGet()}, 1000)});
